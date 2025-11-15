@@ -1,14 +1,18 @@
 import subprocess
 import re
+import pandas as pd
 
-# 基本的な実行
-#subprocess.run(["./bin/csc.exe"])
+df = pd.read_csv('./csv/RGB.csv', encoding='utf-8')
+# 新しい列を追加
+df['C'] = None
+df['M'] = None
+df['Y'] = None
+df['K'] = None
+print(df)
 
-
-# 引数を渡す場合
-#subprocess.run(["./bin/csc.exe", "-cacheoff", "./tif/10_cube_RGB_Page_0_LTR.tif"])
-subprocess.run(["./bin/csc.exe", "-p", "100, 100, 100", "./cxf/colorT.cxf"])
-#subprocess.run(["./bin/csc.exe", "./tif/10_cube_RGB_Page_0_LTR.tif","./tif/output_file.tif","./cxf/colorT.cxf"]) # RGB➡CMYK変換
+subprocess.run(["./bin/csc.exe", "-p", "100, 100, 100", "./cxf/colorT.cxf"]) # RGB値➡CMYK値
+# subprocess.run(["./bin/csc.exe", "./tif/10_cube_RGB_Page_0_LTR.tif","./tif/output_file.tif","./cxf/colorT.cxf"]) #
+# RGB（tif）➡CMYK(tif)変換
 
 # 出力をキャプチャ
 result = subprocess.run(
