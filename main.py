@@ -15,7 +15,7 @@ for index, row in df.iterrows():
     print(f"行番号: {index}")
     print(f"R: {row['R']}, G: {row['G']}, B: {row['B']}")
 
-    result = subprocess.run(["./bin/csc.exe", "-p", "100, 100, 100", "./cxf/colorT.cxf"],
+    result = subprocess.run(["./bin/csc.exe", "-p",f"{row['R']},{row['G']},{row['B']}", "./cxf/colorT.cxf"],
                             capture_output=True,text=True) # RGB値➡CMYK値
     # subprocess.run(["./bin/csc.exe", "./tif/10_cube_RGB_Page_0_LTR.tif","./tif/output_file.tif","./cxf/colorT.cxf"]) #
     # RGB（tif）➡CMYK(tif)変換
