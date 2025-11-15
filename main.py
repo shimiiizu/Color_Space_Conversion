@@ -51,6 +51,6 @@ def convert_dataframe(input_csv, output_csv, cxf_file):
 # 実行
 df_result = convert_dataframe(
     input_csv='./csv/RGB.csv',
-    output_csv='./csv/CMYK.csv',
+    output_csv='./csv/RGBCMYK.csv',
     cxf_file='./cxf/colorT.cxf'
 )
