@@ -15,24 +15,26 @@ for index, row in df.iterrows():
     print(f"行番号: {index}")
     print(f"R: {row['R']}, G: {row['G']}, B: {row['B']}")
 
+    result = subprocess.run(["./bin/csc.exe", "-p", "100, 100, 100", "./cxf/colorT.cxf"],
+                            capture_output=True,text=True) # RGB値➡CMYK値
+    # subprocess.run(["./bin/csc.exe", "./tif/10_cube_RGB_Page_0_LTR.tif","./tif/output_file.tif","./cxf/colorT.cxf"]) #
+    # RGB（tif）➡CMYK(tif)変換
 
-subprocess.run(["./bin/csc.exe", "-p", "100, 100, 100", "./cxf/colorT.cxf"]) # RGB値➡CMYK値
-# subprocess.run(["./bin/csc.exe", "./tif/10_cube_RGB_Page_0_LTR.tif","./tif/output_file.tif","./cxf/colorT.cxf"]) #
-# RGB（tif）➡CMYK(tif)変換
+    """
+    # 出力をキャプチャ
+    result = subprocess.run(
+        ["./bin/csc.exe", "-p", "100,100,100", "./cxf/colorT.cxf"],
+        capture_output=True,
+        text=True
+    )
+    """
 
-# 出力をキャプチャ
-result = subprocess.run(
-    ["./bin/csc.exe", "-p", "100,100,100", "./cxf/colorT.cxf"],
-    capture_output=True,
-    text=True
-)
+    # 出力から数値を抽出
+    output = result.stdout.strip()
+    print(f"生の出力: {output}")
 
-# 出力から数値を抽出
-output = result.stdout.strip()
-print(f"生の出力: {output}")
-
-# 正規表現でCMYK値を抽出
-match = re.search(r'\((\d+),\s*(\d+),\s*(\d+),\s*(\d+)\)', output)
-if match:
-    c, m, y, k = map(int, match.groups())
-    print(f"C: {c}, M: {m}, Y: {y}, K: {k}")
+    # 正規表現でCMYK値を抽出
+    match = re.search(r'\((\d+),\s*(\d+),\s*(\d+),\s*(\d+)\)', output)
+    if match:
+        c, m, y, k = map(int, match.groups())
+        print(f"C: {c}, M: {m}, Y: {y}, K: {k}")
